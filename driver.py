@@ -47,13 +47,25 @@ if __name__ == '__main__':
         # Load data.
         input_file = os.path.join(input_directory, f)
         data = load_challenge_data(input_file)
-
+        # Nawawy's start
+        print('data')
+        print(data)
+        print(data.shape)
+        print('--------------------------------------------')
+        # Nawawy's end
         # Make predictions.
         num_rows = len(data)
         scores = np.zeros(num_rows)
         labels = np.zeros(num_rows)
         for t in range(num_rows):
             current_data = data[:t+1]
+            # Nawawy's start
+            print('current_data')
+            print(current_data)
+            print(current_data.shape)
+            print('--------------------------------------------')
+            exit(1)
+            # Nawawy's end
             current_score, current_label = get_sepsis_score(current_data, model)
             scores[t] = current_score
             labels[t] = current_label

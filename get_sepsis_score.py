@@ -54,11 +54,11 @@ def get_sepsis_score(data, model, adversary=False):
     data = data.fillna(0).values
     # Nawawy's start
     # Call URET here
-    if adversary:
-        explorer = process_config_file(cf, model, feature_extractor=feature_extractor, input_processor_list=[])
-        explorer.scoring_function = self.loss
-        explore_params = [allPatients_benign, chart.shape[1], chart.shape[2], y]
-        allPatients_adversarial = explorer.explore(explore_params)
+    # if adversary:
+        # explorer = process_config_file(cf, model, feature_extractor=feature_extractor, input_processor_list=[])
+        # explorer.scoring_function = self.loss
+        # explore_params = [allPatients_benign, chart.shape[1], chart.shape[2], y]
+        # allPatients_adversarial = explorer.explore(explore_params)
     # Nawawy's end
     norm = [2.800e+02, 1.000e+02, 5.000e+01, 3.000e+02, 3.000e+02, 3.000e+02, 1.000e+02,
             1.000e+02, 1.000e+02, 5.500e+01, 4.000e+03, 7.930e+00, 1.000e+02, 1.000e+02,
