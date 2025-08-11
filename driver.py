@@ -15,9 +15,9 @@ def load_challenge_data(file):
     # Ignore SepsisLabel column if present.
     if column_names[-1] == 'SepsisLabel':
         column_names = column_names[:-1]
-        data = data[:, :-1]
     # Nawawy's start
         target_labels = data[:,-1]
+        data = data[:, :-1]
 
     return data, target_labels
     # Nawawy's end
