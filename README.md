@@ -1,0 +1,3 @@
+- Run using python 3.9 virtual environment.
+- Modify requirements.txt to remove all specified versions (numpy and scipy).
+- pip install -r requirements.txt
