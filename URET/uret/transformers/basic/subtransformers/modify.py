@@ -109,6 +109,7 @@ class Modify(SubTransformer):
             list(set(increment_values))
         )  # remove duplicates. This can be from geomspace with ints usually
         increment_values = np.delete(increment_values, increment_values == 0)  # remove 0's
+        
         # increment_values = np.concatenate((-1 * increment_values, increment_values))  # Use positive and negative values
 
         return increment_values

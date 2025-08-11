@@ -152,7 +152,6 @@ class Transformer(ABC):
             x, static_fields = self.input_processor(x)
 
         transformation_index = transformation_value[0]
-
         possible, action_args = self._is_possible(
             x, transformation_record=transformation_record, transformation_value=transformation_value
         )
@@ -183,7 +182,6 @@ class Transformer(ABC):
         action_list = []
         for i, subtransformer in enumerate(self.subtransformer_list):
             subtransformer_actions = subtransformer.get_possible(x)
-
             for action in subtransformer_actions:
                 possible, action_args = self.is_possible(
                     x, transformation_record=transformation_record, transformation_value=[i, action]

@@ -64,8 +64,6 @@ class BeamSearchGraphExplorer(GraphExplorer):
         :param depth: current depth of search.
         """
         # Nawawy's start
-        # [meds, chart, out, proc, lab, stat, demo]
-
         backcast = sample[1]
         nv = sample[2]
         sample = sample[0]
@@ -147,9 +145,7 @@ class BeamSearchGraphExplorer(GraphExplorer):
 
             # Only evaluate nodes that haven't been previously visited
             if not np.any(
-                # Nawawy's MIMIC start
-                [np.all(sample_next[1].numpy().reshape(-1, len(sample_next[1])*backcast*nv) == v[1].numpy().reshape(-1, len(v[1])*backcast*nv)) for v in self.visited_nodes]
-                # Nawawy's MIMIC end
+                [np.all(sample_next == v) for v in self.visited_nodes]
             ):  # This might not work with all data types?
                 if convert_back_to_list:  # Restore back to list
                     sample_next = list(sample_next)

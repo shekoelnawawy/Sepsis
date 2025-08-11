@@ -3,9 +3,7 @@ from abc import ABC, abstractmethod
 import numpy as np
 import random
 import tqdm
-# Nawawy's MIMIC start
-import torch
-# Nawawy's MIMIC end
+
 
 def create_default_loss_func(scoring_alg, feature_extractor, model_predict, target_label=None):
     """
@@ -143,90 +141,91 @@ class GraphExplorer(ABC):
             elif len(target_features) != len(x):
                 raise ValueError("There must be as many target features as inputs")
 
-        # Nawawy's MIMIC start
-        # generated_samples = []
-        #
-        # if return_record:
-        #     records = []
+        generated_samples = []
 
-        # [meds, chart, out, proc, lab, stat, demo]
+        if return_record:
+            records = []
+
+        # Nawawy's start
         backcast = x[1]
         nv = x[2]
-        y_truth = x[3]
         x = x[0]
+        # Nawawy's end
 
-    # for i in range(len(x[0])):
-    #     sample = x[0][i], x[1][i], x[2][i], x[3][i], x[4], x[5][i], x[6][i]
-        sample = x[0], x[1], x[2], x[3], x[4], x[5], x[6]
+        for i, sample in enumerate(tqdm.tqdm(x)):
+            # Nawawy's start
+            sample = sample.reshape(1, backcast, nv)
+            original_pred,_,_,_,_ = self.model_predict(self.feature_extractor(sample))
+            # Nawawy's end
+            if len(np.shape(original_pred)) == 2:
+                original_pred = original_pred[0]
 
-        original_pred, logits = self.model_predict(sample[0], sample[1], sample[2], sample[3], sample[4], sample[5], sample[6])
+            best_sample = None
+            best_score = np.inf
+            if return_record:
+                best_record = None
 
-        # if len(np.shape(original_pred)) == 2:
-        #     original_pred = original_pred[0]
-        # Nawawy's MIMIC end
+            if self.scoring_alg == "model_loss":
+                score_input = original_pred
+            else:
+                score_input = target_features[i]
+            # Nawawy's start
+            sample = sample.reshape(backcast*nv)
+            # Nawawy's end
+            for sample_next, transformation_record, _ in self.search([sample, backcast, nv], score_input):
+                # Nawawy's start
+                sample_next = sample_next.reshape(1, backcast, nv)
+                new_prediction, _, _, _, _ = self.model_predict(self.feature_extractor(sample_next))
+                if len(np.shape(new_prediction)) == 2:
+                    new_prediction = new_prediction
+                # Score the current sample
+                score = self.scoring_function(new_prediction, score_input)
+                # Nawawy's end
 
-        best_sample = None
-        best_score = np.inf
+                # Early exit conditions
+                # If using feature loss, then we can early exit once the target features are attained
+                # Maybe consider a "close-enough" condition instead?
+                if self.scoring_alg == "feature_loss" and np.array_equal(
+                    target_features[i], self.feature_extractor(sample_next)
+                ):
+                    best_sample = sample_next
+                    best_score = score
+                    break
+
+                # Nawawy's start
+                if self.target_label is not None and np.argmax(new_prediction.cpu().detach().numpy()) == self.target_label:
+                # Nawawy's end
+                    best_sample = sample_next
+                    best_score = score
+                    if return_record:
+                        best_record = transformation_record
+                    break
+
+                # Nawawy's start
+                elif np.argmax(new_prediction.cpu().detach().numpy()) != np.argmax(original_pred.cpu().detach().numpy()):
+                # Nawawy's end
+                    best_sample = sample_next
+                    best_score = score
+                    if return_record:
+                        best_record = transformation_record
+                    break
+
+                # Check if the current sample is better
+                if best_sample is None or score < best_score:
+                    best_sample = sample_next
+                    best_score = score
+                    if return_record:
+                        best_record = transformation_record
+
+            if return_record:
+                records.append(best_record)
+
+            generated_samples.append(best_sample)
+
         if return_record:
-            best_record = None
+            return generated_samples, records
 
-        if self.scoring_alg == "model_loss":
-            # Nawawy's MIMIC start
-            score_input = y_truth
-            # Nawawy's MIMIC end
-        else:
-            score_input = target_features
-
-        for sample_next, transformation_record, _ in self.search([sample, backcast, nv], score_input):
-            # Score the current sample
-            # Nawawy's MIMIC start
-            new_prediction, logits = self.model_predict(sample_next[0], sample_next[1], sample_next[2], sample_next[3], sample_next[4], sample_next[5], sample_next[6])
-            test_prob = []
-            test_logits = []
-            test_truth = []
-            test_prob.extend(new_prediction.data.cpu().numpy())
-            test_truth.extend(score_input.data.cpu().numpy())
-            test_logits.extend(logits.data.cpu().numpy())
-            # score = self.scoring_function(sample_next, score_input)
-            score = self.scoring_function(torch.tensor(test_prob), torch.reshape(torch.tensor(test_truth), (len(torch.tensor(test_truth)), 1)), torch.tensor(test_logits), True, False)
-
-
-            # For all loss types, we can early exit if an adversarial example is found
-            # new_prediction = self.model_predict(self.feature_extractor(sample_next))
-            # Nawawy's MIMIC end
-            if len(np.shape(new_prediction)) == 2:
-                new_prediction = new_prediction
-
-            if self.target_label is not None and np.argmax(new_prediction) == self.target_label:
-                best_sample = sample_next
-                best_score = score
-                if return_record:
-                    best_record = transformation_record
-                break
-            # Nawway's MIMIC start
-            # elif (new_prediction.data.cpu().numpy()>=0.5).sum() >= (original_pred.data.cpu().numpy()>=0.5).sum() and (new_prediction.data.cpu().numpy()>=0.5).sum() > (score_input.data.cpu().numpy()>=0.5).sum():
-            elif (np.subtract(new_prediction.data.cpu().numpy(), original_pred.data.cpu().numpy()) >= 0.4).sum() >= len(new_prediction.data.cpu().numpy())*0.3:
-            # Nawawy's MIMIC end
-                best_sample = sample_next
-                best_score = score
-                if return_record:
-                    best_record = transformation_record
-                break
-
-            # Check if the current sample is better
-            if best_sample is None or score < best_score:
-                best_sample = sample_next
-                best_score = score
-                if return_record:
-                    best_record = transformation_record
-        # Nawway's MIMIC start
-
-        if return_record:
-            return best_sample, best_record
-
-        return best_sample
-        # Nawawy's MIMIC end
-
+        return generated_samples
 
     def _enforce_dependencies(self, sample):
         """

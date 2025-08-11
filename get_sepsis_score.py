@@ -12,7 +12,18 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+# Nawawy's start
+import joblib
+import sys
 
+sys.path.append('../URET')
+from URET.uret.utils.config import process_config_file
+cf = "URET/brute.yml"
+
+def feature_extractor(x):
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    return torch.tensor(x, dtype=torch.float).to(device)
+# Nawawy's end
 
 class Model(nn.Module):
     def __init__(self,input_size,hidden_size,hidden_depth):
@@ -35,11 +46,20 @@ class Model(nn.Module):
         return x, F.softmax(x, dim=1)
 
 
-
-def get_sepsis_score(data, model):
+# Nawawy's start
+def get_sepsis_score(data, model, adversary=False):
+# Nawawy's end
     data = pd.DataFrame(data)
     data = data.fillna(method='ffill')
     data = data.fillna(0).values
+    # Nawawy's start
+    # Call URET here
+    if adversary:
+        explorer = process_config_file(cf, model, feature_extractor=feature_extractor, input_processor_list=[])
+        explorer.scoring_function = self.loss
+        explore_params = [allPatients_benign, chart.shape[1], chart.shape[2], y]
+        allPatients_adversarial = explorer.explore(explore_params)
+    # Nawawy's end
     norm = [2.800e+02, 1.000e+02, 5.000e+01, 3.000e+02, 3.000e+02, 3.000e+02, 1.000e+02,
             1.000e+02, 1.000e+02, 5.500e+01, 4.000e+03, 7.930e+00, 1.000e+02, 1.000e+02,
             9.961e+03, 2.680e+02, 3.833e+03, 2.790e+01, 1.450e+02, 4.660e+01, 3.750e+01,

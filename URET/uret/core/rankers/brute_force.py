@@ -1,10 +1,8 @@
 from uret.core.rankers.ranking_algorithm import RankingAlgorithm
 import warnings
 import copy
-# Nawawy's MIMIC start
-import numpy as np
-import torch
-# Nawawy's MIMIC end
+
+
 class BruteForce(RankingAlgorithm):
     """
     This implementation tries all transformations and parameters for each given sample,
@@ -26,12 +24,7 @@ class BruteForce(RankingAlgorithm):
                    current_transformation_records=None):
         backcast = sample[1]
         nv = sample[2]
-        # Nawawy's MIMIC start
-        original_sample = sample[0]
-        sample = sample[0][1]
-        number_of_instances = len(sample)
-        sample = np.array(sample).reshape(number_of_instances*backcast*nv)
-        # Nawawy's MIMIC end
+        sample = sample[0]
     # Nawawy's end
 
         # Create transformation record
@@ -70,24 +63,12 @@ class BruteForce(RankingAlgorithm):
                     transformation_records_temp = new_transformation_record
 
                 sample_temp = self._enforce_dependencies(sample_temp, dependencies)
-
                 # Nawawy's start
-                sample_temp = sample_temp.reshape(number_of_instances, backcast, nv)
-                new_prediction, logits = model_predict(original_sample[0], torch.from_numpy(sample_temp), original_sample[2], original_sample[3], original_sample[4], original_sample[5], original_sample[6])
-                # new_prediction, _, _, _, _ = model_predict(feature_extractor(sample_temp))
+                sample_temp = sample_temp.reshape(1, backcast, nv)
+                new_prediction, _, _, _, _ = model_predict(feature_extractor(sample_temp))
+                score = scoring_function(new_prediction, score_input)
 
-                test_prob=[]
-                test_logits=[]
-                test_truth=[]
-                test_prob.extend(new_prediction.data.cpu().numpy())
-                test_truth.extend(score_input.data.cpu().numpy())
-                test_logits.extend(logits.data.cpu().numpy())
-
-                score = scoring_function(torch.tensor(test_prob), torch.reshape(torch.tensor(test_truth), (len(torch.tensor(test_truth)),1)), torch.tensor(test_logits), True, False)
-
-                # sample_temp = sample_temp.reshape(backcast * nv)
-                sample_temp = original_sample[0], torch.from_numpy(sample_temp), original_sample[2], original_sample[3], original_sample[4], original_sample[5], original_sample[6]
-
+                sample_temp = sample_temp.reshape(backcast * nv)
                 # Nawawy's end
                 if self.multi_feature_input:
                     return_values.append(
