@@ -52,6 +52,7 @@ if __name__ == '__main__':
         print(data)
         print(data.shape)
         print('--------------------------------------------')
+        i=0
         # Nawawy's end
         # Make predictions.
         num_rows = len(data)
@@ -64,7 +65,9 @@ if __name__ == '__main__':
             print(current_data)
             print(current_data.shape)
             print('--------------------------------------------')
-            exit(1)
+            if i == 1:
+                exit(1)
+            i+=1
             # Nawawy's end
             current_score, current_label = get_sepsis_score(current_data, model)
             scores[t] = current_score
