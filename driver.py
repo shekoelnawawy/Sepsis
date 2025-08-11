@@ -9,12 +9,18 @@ def load_challenge_data(file):
         column_names = header.split('|')
         data = np.loadtxt(f, delimiter='|')
 
+    # Nawawy's start
+    target_labels = np.Nan
+    # Nawawy's end
     # Ignore SepsisLabel column if present.
     if column_names[-1] == 'SepsisLabel':
         column_names = column_names[:-1]
         data = data[:, :-1]
+    # Nawawy's start
+        target_labels = data[:,-1]
 
-    return data
+    return data, target_labels
+    # Nawawy's end
 
 def save_challenge_predictions(file, scores, labels):
     with open(file, 'w') as f:
@@ -46,11 +52,15 @@ if __name__ == '__main__':
     for f in files:
         # Load data.
         input_file = os.path.join(input_directory, f)
-        data = load_challenge_data(input_file)
         # Nawawy's start
+        data, target_labels = load_challenge_data(input_file)
         print('data')
         print(data)
         print(data.shape)
+        print('--------------------------------------------')
+        print('target_labels')
+        print(target_labels)
+        print(target_labels.shape)
         print('--------------------------------------------')
         i=0
         # Nawawy's end

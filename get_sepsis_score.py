@@ -23,6 +23,10 @@ cf = "URET/brute.yml"
 def feature_extractor(x):
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     return torch.tensor(x, dtype=torch.float).to(device)
+
+def mse(output, target):
+	loss=torch.mean((output - target) ** 2)
+	return loss
 # Nawawy's end
 
 class Model(nn.Module):
@@ -56,7 +60,7 @@ def get_sepsis_score(data, model, adversary=False):
     # Call URET here
     # if adversary:
         # explorer = process_config_file(cf, model, feature_extractor=feature_extractor, input_processor_list=[])
-        # explorer.scoring_function = self.loss
+        # explorer.scoring_function = mse
         # explore_params = [allPatients_benign, chart.shape[1], chart.shape[2], y]
         # allPatients_adversarial = explorer.explore(explore_params)
     # Nawawy's end
