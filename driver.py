@@ -10,7 +10,7 @@ def load_challenge_data(file):
         data = np.loadtxt(f, delimiter='|')
 
     # Nawawy's start
-    target_labels = np.Nan
+    target_labels = np.nan
     # Nawawy's end
     # Ignore SepsisLabel column if present.
     if column_names[-1] == 'SepsisLabel':
