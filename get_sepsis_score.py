@@ -19,7 +19,6 @@ import sys
 sys.path.append('../URET')
 from URET.uret.utils.config import process_config_file
 cf = "URET/brute.yml"
-nv = 40
 
 
 def feature_extractor(x):
@@ -61,17 +60,6 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
     # Nawawy's start
     backcast_length = data.shape[0]
     nv = data.shape[1]
-    print('data')
-    print(data)
-    print(data.shape)
-    print('-----------------------------------')
-    print('backcast_length')
-    print(backcast_length)
-    print('-----------------------------------')
-    print('nv')
-    print(nv)
-    print('-----------------------------------')
-    exit(1)
     # Call URET here
     if adversary:
         explorer = process_config_file(cf, model, feature_extractor=feature_extractor, input_processor_list=[])
