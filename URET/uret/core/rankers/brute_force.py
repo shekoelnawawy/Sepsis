@@ -41,7 +41,7 @@ class BruteForce(RankingAlgorithm):
             print('-----------------------------------------------')
             print('transformer')
             print(transformer)
-            print(transformer.shape)
+            # print(transformer.shape)
             print('-----------------------------------------------')
             print('input_index')
             print(input_index)
