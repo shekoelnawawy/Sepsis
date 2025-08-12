@@ -155,6 +155,10 @@ class GraphExplorer(ABC):
         for i, sample in enumerate(tqdm.tqdm(x)):
             # Nawawy's start
             sample = sample.reshape(1, backcast, nv)
+            print('sample')
+            print(sample)
+            print(sample.shape)
+            print('-------------------------------------------------')
             original_pred,_,_,_,_ = self.model_predict(self.feature_extractor(sample))
             # Nawawy's end
             if len(np.shape(original_pred)) == 2:
