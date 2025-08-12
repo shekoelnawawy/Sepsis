@@ -19,6 +19,8 @@ import sys
 sys.path.append('../URET')
 from URET.uret.utils.config import process_config_file
 cf = "URET/brute.yml"
+nv = 40
+
 
 def feature_extractor(x):
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
@@ -51,18 +53,21 @@ class Model(nn.Module):
 
 
 # Nawawy's start
-def get_sepsis_score(data, model, adversary=False):
+def get_sepsis_score(data, model, target_labels=None, adversary=False):
 # Nawawy's end
     data = pd.DataFrame(data)
     data = data.fillna(method='ffill')
     data = data.fillna(0).values
     # Nawawy's start
     # Call URET here
-    # if adversary:
-        # explorer = process_config_file(cf, model, feature_extractor=feature_extractor, input_processor_list=[])
-        # explorer.scoring_function = mse
-        # explore_params = [allPatients_benign, chart.shape[1], chart.shape[2], y]
-        # allPatients_adversarial = explorer.explore(explore_params)
+    if adversary:
+        explorer = process_config_file(cf, model, feature_extractor=feature_extractor, input_processor_list=[])
+        explorer.scoring_function = mse
+        allPatients_benign = data.reshape(-1, backcast_length*nv)
+        explore_params = [allPatients_benign, backcast_length, nv]
+        allPatients_adversarial = explorer.explore(explore_params)
+
+
     # Nawawy's end
     norm = [2.800e+02, 1.000e+02, 5.000e+01, 3.000e+02, 3.000e+02, 3.000e+02, 1.000e+02,
             1.000e+02, 1.000e+02, 5.500e+01, 4.000e+03, 7.930e+00, 1.000e+02, 1.000e+02,
