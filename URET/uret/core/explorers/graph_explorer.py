@@ -164,7 +164,8 @@ class GraphExplorer(ABC):
             # print(sample)
             # print(sample.shape)
             # print('-------------------------------------------------')
-            original_pred,_,_,_,_ = self.model_predict(self.feature_extractor(sample))
+            _,original_pred= self.model_predict(self.feature_extractor(sample))
+            exit(1)
             # Nawawy's end
             if len(np.shape(original_pred)) == 2:
                 original_pred = original_pred[0]
