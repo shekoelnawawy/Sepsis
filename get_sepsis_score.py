@@ -64,7 +64,7 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
     if adversary:
         explorer = process_config_file(cf, model, feature_extractor=feature_extractor, input_processor_list=[])
         explorer.scoring_function = mse
-        allPatients_benign = data.reshape(-1, backcast_length*nv)
+        allPatients_benign = data.reshape(backcast_length*nv)#data.reshape(-1, backcast_length*nv)
         explore_params = [allPatients_benign, backcast_length, nv]
         allPatients_adversarial = explorer.explore(explore_params)
         # print('allPatients_adversarial')
