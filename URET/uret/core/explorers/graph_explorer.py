@@ -150,7 +150,12 @@ class GraphExplorer(ABC):
         backcast = x[1]
         nv = x[2]
         x = x[0]
+        print('x')
+        print(x)
+        print(x.shape)
+        print('-------------------------------------------------')
         # Nawawy's end
+
 
         for i, sample in enumerate(tqdm.tqdm(x)):
             # Nawawy's start
