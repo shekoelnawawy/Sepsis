@@ -154,7 +154,7 @@ class GraphExplorer(ABC):
 
         for i, sample in enumerate(tqdm.tqdm(x)):
             # Nawawy's start
-            sample = sample.reshape(1, backcast, nv)
+            sample = sample.reshape(backcast, nv)#sample.reshape(1, backcast, nv)
             print('sample')
             print(sample)
             print(sample.shape)
