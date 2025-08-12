@@ -67,8 +67,15 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
         allPatients_benign = data.reshape(-1, backcast_length*nv)
         explore_params = [allPatients_benign, backcast_length, nv]
         allPatients_adversarial = explorer.explore(explore_params)
-
-
+        print('allPatients_adversarial')
+        print(allPatients_adversarial)
+        print(allPatients_adversarial.shape)
+        print('------------------------------------------------------')
+        print('allPatients_benign')
+        print(allPatients_benign)
+        print(allPatients_benign.shape)
+        print('------------------------------------------------------')
+        exit(1)
     # Nawawy's end
     norm = [2.800e+02, 1.000e+02, 5.000e+01, 3.000e+02, 3.000e+02, 3.000e+02, 1.000e+02,
             1.000e+02, 1.000e+02, 5.500e+01, 4.000e+03, 7.930e+00, 1.000e+02, 1.000e+02,
