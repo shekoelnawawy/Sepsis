@@ -12,7 +12,7 @@ ranker_params:
 transformer_params:
     - data_type: "number"
       feature_index:
-#          - 0  #glucose (t-12)
+          - 0  #glucose (t-12)
           - 7  #glucose (t-11)
           - 14 #glucose (t-10)
           - 21 #glucose (t-9)
