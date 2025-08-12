@@ -58,6 +58,7 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
     data = data.fillna(method='ffill')
     data = data.fillna(0).values
     # Nawawy's start
+    print('data.shape')
     print(data.shape)
     backcast_length = data.shape[0]
     nv = data.shape[1]
@@ -66,6 +67,7 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
         explorer = process_config_file(cf, model, feature_extractor=feature_extractor, input_processor_list=[])
         explorer.scoring_function = mse
         allPatients_benign = data.reshape(backcast_length*nv)#data.reshape(-1, backcast_length*nv)
+        print('allPatients_benign.shape')
         print(allPatients_benign.shape)
         explore_params = [allPatients_benign, backcast_length, nv]
         allPatients_adversarial = explorer.explore(explore_params)
