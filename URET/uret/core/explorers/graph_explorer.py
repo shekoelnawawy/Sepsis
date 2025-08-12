@@ -150,20 +150,20 @@ class GraphExplorer(ABC):
         backcast = x[1]
         nv = x[2]
         x = x[0].reshape(backcast,nv)
-        print('x')
-        print(x)
-        print(x.shape)
-        print('-------------------------------------------------')
+        # print('x')
+        # print(x)
+        # print(x.shape)
+        # print('-------------------------------------------------')
         # Nawawy's end
 
 
         for i, sample in enumerate(tqdm.tqdm(x)):
             # Nawawy's start
-            sample = sample.reshape(backcast, nv)#sample.reshape(1, backcast, nv)
-            print('sample')
-            print(sample)
-            print(sample.shape)
-            print('-------------------------------------------------')
+            # sample = sample.reshape(backcast, nv)#sample.reshape(1, backcast, nv)
+            # print('sample')
+            # print(sample)
+            # print(sample.shape)
+            # print('-------------------------------------------------')
             original_pred,_,_,_,_ = self.model_predict(self.feature_extractor(sample))
             # Nawawy's end
             if len(np.shape(original_pred)) == 2:
