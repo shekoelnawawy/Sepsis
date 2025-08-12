@@ -64,6 +64,9 @@ if __name__ == '__main__':
             current_score, current_label = get_sepsis_score(current_data, model)
             scores[t] = current_score
             labels[t] = current_label
+            # Nawawy's start
+            current_score_adversarial, current_label_adversarial = get_sepsis_score(current_data, model, adversary=True)
+            # Nawawy's end
 
         # Save results.
         output_file = os.path.join(output_directory, f)
