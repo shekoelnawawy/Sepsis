@@ -38,7 +38,7 @@ class BruteForce(RankingAlgorithm):
             # Nawawy's start
             print('sample')
             print(sample)
-            print(sample.size)
+            print(sample.shape)
             print('-----------------------------------------------')
             print('transformer_index')
             print(transformer_index)
