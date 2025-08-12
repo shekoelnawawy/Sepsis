@@ -22,7 +22,7 @@ cf = "URET/brute.yml"
 
 
 def feature_extractor(x):
-    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    device = torch.device('cpu')#torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     return torch.tensor(x, dtype=torch.float).to(device)
 
 def mse(output, target):
