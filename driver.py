@@ -59,6 +59,10 @@ if __name__ == '__main__':
         num_rows = len(data)
         scores = np.zeros(num_rows)
         labels = np.zeros(num_rows)
+        # Nawawy's start
+        scores_adversarial = np.zeros(num_rows)
+        labels_adversarial = np.zeros(num_rows)
+        # Nawawy's end
         for t in range(num_rows):
             current_data = data[:t+1]
             current_score, current_label = get_sepsis_score(current_data, model)
@@ -66,8 +70,15 @@ if __name__ == '__main__':
             labels[t] = current_label
             # Nawawy's start
             current_score_adversarial, current_label_adversarial = get_sepsis_score(current_data, model, adversary=True)
+            scores_adversarial[t] = current_score_adversarial
+            labels_adversarial[t] = current_label_adversarial
             # Nawawy's end
 
         # Save results.
         output_file = os.path.join(output_directory, f)
         save_challenge_predictions(output_file, scores, labels)
+
+        # Nawawy's start
+        output_file = os.path.join(output_directory, 'adversarial_', f)
+        save_challenge_predictions(output_file, scores_adversarial, labels_adversarial)
+        # Nawawy's end
