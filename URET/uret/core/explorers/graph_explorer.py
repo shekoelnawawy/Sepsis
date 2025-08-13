@@ -150,6 +150,12 @@ class GraphExplorer(ABC):
         backcast = x[1]
         nv = x[2]
         x = x[0]#.reshape(backcast,nv)
+        print('backcast')
+        print(backcast)
+        print('---------------------------------')
+        print('nv')
+        print(nv)
+        print('---------------------------------')
         # Nawawy's end
 
 
