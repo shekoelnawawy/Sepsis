@@ -37,11 +37,6 @@ class BruteForce(RankingAlgorithm):
         for transformer_index, (transformer, input_index) in enumerate(self.transformer_list):
             # Nawawy's start
             input_index = list(range(input_index[0], len(sample), nv))
-            print('input_index')
-            print(input_index)
-            print(type(input_index))
-            print('-----------------------------------------------')
-            exit(1)
             # Nawawy's end
             if self.multi_feature_input:
                 possible_actions = transformer.get_possible(
