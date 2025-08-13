@@ -150,6 +150,11 @@ class GraphExplorer(ABC):
         backcast = x[1]
         nv = x[2]
         x = x[0]#.reshape(backcast,nv)
+        print('x')
+        print(x)
+        print(x.shape)
+        print(type(x))
+        print('---------------------------------')
         print('backcast')
         print(backcast)
         print('---------------------------------')
