@@ -36,6 +36,14 @@ if __name__ == '__main__':
     input_directory = sys.argv[1]
     output_directory = sys.argv[2]
 
+    # Nawawy's start
+    if not os.path.isdir(input_directory):
+        raise FileNotFoundError(f"Directory does not exist: {input_directory}")
+
+    os.makedirs(output_directory, exist_ok=True)
+    os.makedirs(os.path.join(output_directory, 'Adversarial'), exist_ok=True)
+    # Nawawy's end
+
     # Find files.
     files = []
     for f in os.listdir(input_directory):
@@ -79,6 +87,6 @@ if __name__ == '__main__':
         save_challenge_predictions(output_file, scores, labels)
 
         # Nawawy's start
-        output_file = os.path.join(output_directory, 'adversarial_', f)
+        output_file = os.path.join(output_directory, 'Adversarial', f)
         save_challenge_predictions(output_file, scores_adversarial, labels_adversarial)
         # Nawawy's end
