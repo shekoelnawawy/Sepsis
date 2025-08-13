@@ -71,7 +71,7 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
         print(type(allPatients_benign))
         print('-------------------------------------------')
         explore_params = [allPatients_benign, backcast_length, nv]
-        allPatients_adversarial = explorer.explore(explore_params)
+        allPatients_adversarial = np.array(explorer.explore(explore_params))
 
         print('allPatients_adversarial')
         print(allPatients_adversarial)
