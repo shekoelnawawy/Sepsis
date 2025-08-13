@@ -50,6 +50,7 @@ class BruteForce(RankingAlgorithm):
             print('input_index')
             print(input_index)
             print(input_index.shape)
+            print(type(input_index))
             print('-----------------------------------------------')
             exit(1)
             # Nawawy's end
