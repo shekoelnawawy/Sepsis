@@ -36,18 +36,7 @@ class BruteForce(RankingAlgorithm):
 
         for transformer_index, (transformer, input_index) in enumerate(self.transformer_list):
             # Nawawy's start
-            print('sample')
-            print(sample)
-            print(sample.shape)
-            print(type(sample))
-            print('-----------------------------------------------')
-            print('transformer_index')
-            print(transformer_index)
-            print('-----------------------------------------------')
-            print('transformer')
-            print(transformer)
-            # print(transformer.shape)
-            print('-----------------------------------------------')
+            input_index = list(range(input_index, len(sample), nv))
             print('input_index')
             print(input_index)
             print(type(input_index))
