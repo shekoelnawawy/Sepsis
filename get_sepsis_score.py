@@ -66,7 +66,8 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
         explorer.scoring_function = mse
         allPatients_benign = data#.reshape(backcast_length*nv)#data.reshape(-1, backcast_length*nv)
         explore_params = [allPatients_benign, backcast_length, nv]
-        allPatients_adversarial = np.array(explorer.explore(explore_params)).reshape(backcast_length, nv)
+        allPatients_adversarial = explorer.explore(explore_params)
+        allPatients_adversarial = np.array(allPatients_adversarial).reshape(backcast_length, nv)
         print('allPatients_benign')
         print(allPatients_benign)
         print(allPatients_benign.shape)
