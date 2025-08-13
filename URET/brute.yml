@@ -12,36 +12,13 @@ ranker_params:
 transformer_params:
     - data_type: "number"
       feature_index:
-          - 0  #glucose (t-12)
-#          - 7  #glucose (t-11)
-#          - 14 #glucose (t-10)
-#          - 21 #glucose (t-9)
-#          - 28 #glucose (t-8)
-#          - 35 #glucose (t-7)
-#          - 42 #glucose (t-6)
-#          - 49 #glucose (t-5)
-#          - 56 #glucose (t-4)
-#          - 63 #glucose (t-3)
-#          - 70 #glucose (t-2)
-#          - 77 #glucose (t-1)
-#          - 5  #finger (t-12)
-#          - 12 #finger (t-11)
-#          - 19 #finger (t-10)
-#          - 26 #finger (t-9)
-#          - 33 #finger (t-8)
-#          - 40 #finger (t-7)
-#          - 47 #finger (t-6)
-#          - 54 #finger (t-5)
-#          - 61 #finger (t-4)
-#          - 68 #finger (t-3)
-#          - 75 #finger (t-2)
-#          - 82 #finger (t-1)
+          - 0  #HR
       init_args:
           number_type: "int"
           input_constraints: #{"bounds": {"lower":40, "upper":400, "method":0"}}
                 bounds:
-                    lower: 180
-                    upper: 499
+                    lower: 120
+                    upper: 140
                     method: 0
           subtransformer_args:
               - name: "Modify"
