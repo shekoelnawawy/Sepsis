@@ -149,7 +149,7 @@ class GraphExplorer(ABC):
         # Nawawy's start
         backcast = x[1]
         nv = x[2]
-        x = x[0].reshape(backcast*nv)
+        x = x[0].reshape(1,backcast*nv)
         print('x')
         print(x)
         print(x.shape)
