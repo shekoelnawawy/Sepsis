@@ -149,7 +149,7 @@ class GraphExplorer(ABC):
         # Nawawy's start
         backcast = x[1]
         nv = x[2]
-        x = x[0]#.reshape(backcast,nv)
+        x = x[0].reshape(backcast*nv)
         print('x')
         print(x)
         print(x.shape)
@@ -181,7 +181,7 @@ class GraphExplorer(ABC):
             else:
                 score_input = target_features[i]
             # Nawawy's start
-            sample = sample.reshape(backcast*nv)
+            # sample = sample.reshape(backcast*nv)
             # Nawawy's end
             for sample_next, transformation_record, _ in self.search([sample, backcast, nv], score_input):
                 # Nawawy's start
