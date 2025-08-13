@@ -175,7 +175,7 @@ class GraphExplorer(ABC):
             for sample_next, transformation_record, _ in self.search([sample, backcast, nv], score_input):
                 # Nawawy's start
                 sample_next = sample_next.reshape(1, backcast, nv)
-                new_prediction, _, _, _, _ = self.model_predict(self.feature_extractor(sample_next))
+                _, new_prediction = self.model_predict(self.feature_extractor(sample_next))
                 if len(np.shape(new_prediction)) == 2:
                     new_prediction = new_prediction
                 # Score the current sample
