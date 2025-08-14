@@ -22,7 +22,7 @@ cf = "URET/brute.yml"
 
 
 def feature_extractor(x):
-    device = torch.device('cpu')#torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
     return torch.tensor(x, dtype=torch.float).to(device)
 
 def mse(output, target):
@@ -58,6 +58,8 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
     data = data.fillna(method='ffill')
     data = data.fillna(0).values
     # Nawawy's start
+    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    data=torch.tensor(data).float().to(device)
     backcast_length = data.shape[0]
     nv = data.shape[1]
     # Call URET here
@@ -65,20 +67,10 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
         explorer = process_config_file(cf, model, feature_extractor=feature_extractor, input_processor_list=[])
         explorer.scoring_function = mse
         allPatients_benign = data
-        print('allPatients_benign')
-        print(allPatients_benign)
-        print(allPatients_benign.shape)
-        print(type(allPatients_benign))
-        print('-------------------------------------------')
         explore_params = [allPatients_benign, backcast_length, nv]
         allPatients_adversarial = np.array(explorer.explore(explore_params))
         if allPatients_adversarial[0] is None:
             allPatients_adversarial = allPatients_benign
-        print('allPatients_adversarial')
-        print(allPatients_adversarial)
-        print(allPatients_adversarial.shape)
-        print(type(allPatients_adversarial))
-        print('-------------------------------------------')
         allPatients_adversarial = allPatients_adversarial.reshape(backcast_length, nv)
         data = allPatients_adversarial
     # Nawawy's end
@@ -89,7 +81,7 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
             7.170e+01, 3.200e+01, 2.500e+02, 4.400e+02, 1.760e+03, 2.322e+03, 1.000e+02,
             1.000e+00, 1.000e+00, 1.000e+00, 2.399e+01, 3.360e+02]
     data = data/norm
-    data = torch.Tensor(data).float()
+    data = torch.Tensor(data).float().to(device)
     threshold = 0.10
     _, probs = model(data)
     probs = probs[:, 1]
