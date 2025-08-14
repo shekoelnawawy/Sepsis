@@ -41,6 +41,7 @@ if __name__ == '__main__':
         raise FileNotFoundError(f"Directory does not exist: {input_directory}")
 
     os.makedirs(output_directory, exist_ok=True)
+    os.makedirs(os.path.join(output_directory, 'Benign'), exist_ok=True)
     os.makedirs(os.path.join(output_directory, 'Adversarial'), exist_ok=True)
     # Nawawy's end
 
@@ -83,7 +84,9 @@ if __name__ == '__main__':
             # Nawawy's end
 
         # Save results.
-        output_file = os.path.join(output_directory, f)
+        # Nawawy's start
+        output_file = os.path.join(output_directory, 'Benign', f)
+        # Nawawy's end
         save_challenge_predictions(output_file, scores, labels)
 
         # Nawawy's start
