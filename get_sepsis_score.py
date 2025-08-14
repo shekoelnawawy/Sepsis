@@ -85,7 +85,9 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
             7.170e+01, 3.200e+01, 2.500e+02, 4.400e+02, 1.760e+03, 2.322e+03, 1.000e+02,
             1.000e+00, 1.000e+00, 1.000e+00, 2.399e+01, 3.360e+02]
     data = data/norm
-    data = torch.Tensor(data).float()#.to(device)
+    # Nawawy's start
+    data = torch.Tensor(data).float().to(device)
+    # Nawawy's end
     threshold = 0.10
     _, probs = model(data)
     probs = probs[:, 1]
