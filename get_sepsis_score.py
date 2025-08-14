@@ -92,8 +92,9 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
     _, probs = model(data)
     probs = probs[:, 1]
     argmax = (probs > threshold)
-    return probs.data.numpy()[0], argmax.data.numpy()[0]
-
+    # Nawawy's start
+    return probs.cpu().data.numpy()[0], argmax.cpu().data.numpy()[0]
+    # Nawawy's end
 def load_sepsis_model():
     modelpth = './model_1561740354_cv_0_16_0.09277561709115473'
     # Nawawy's start
