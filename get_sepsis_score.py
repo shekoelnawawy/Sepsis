@@ -59,7 +59,7 @@ def get_sepsis_score(data, model, target_labels=None, adversary=False):
     data = data.fillna(0).values
     # Nawawy's start
     device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
-    data=torch.tensor(data).float().to(device)
+    # data=torch.tensor(data).float().to(device)
     backcast_length = data.shape[0]
     nv = data.shape[1]
     # Call URET here
