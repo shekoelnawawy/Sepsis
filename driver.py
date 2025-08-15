@@ -2,6 +2,9 @@
 
 import numpy as np, os, sys
 from get_sepsis_score import load_sepsis_model, get_sepsis_score
+# Nawawy's start
+import joblib
+# Nawawy's end
 
 def load_challenge_data(file):
     with open(file, 'r') as f:
@@ -35,8 +38,10 @@ if __name__ == '__main__':
         raise FileNotFoundError(f"Directory does not exist: {input_directory}")
 
     os.makedirs(output_directory, exist_ok=True)
-    os.makedirs(os.path.join(output_directory, 'Benign'), exist_ok=True)
-    os.makedirs(os.path.join(output_directory, 'Adversarial'), exist_ok=True)
+    os.makedirs(os.path.join(output_directory, 'Predictions', 'Benign'), exist_ok=True)
+    os.makedirs(os.path.join(output_directory, 'Predictions', 'Adversarial'), exist_ok=True)
+    os.makedirs(os.path.join(output_directory, 'Data', 'Benign'), exist_ok=True)
+    os.makedirs(os.path.join(output_directory, 'Data', 'Adversarial'), exist_ok=True)
     # Nawawy's end
 
     # Find files.
@@ -76,28 +81,15 @@ if __name__ == '__main__':
             labels_adversarial[t] = current_label_adversarial
             # Nawawy's end
 
-        # Nawawy's start
-        print('benign_data')
-        print(data)
-        print(data.shape)
-        print(type(data))
-        print('---------------------------------------------')
-
-        print('adversarial_data')
-        print(adversarial_data)
-        print(adversarial_data.shape)
-        print(type(adversarial_data))
-        print('---------------------------------------------')
-        exit(1)
-        # Nawawy's end
-
         # Save results.
         # Nawawy's start
-        output_file = os.path.join(output_directory, 'Benign', f)
+        output_file = os.path.join(output_directory, 'Predictions', 'Benign', f)
         # Nawawy's end
         save_challenge_predictions(output_file, scores, labels)
 
         # Nawawy's start
-        output_file = os.path.join(output_directory, 'Adversarial', f)
+        output_file = os.path.join(output_directory, 'Predictions', 'Adversarial', f)
         save_challenge_predictions(output_file, scores_adversarial, labels_adversarial)
+        joblib.dump(data, os.path.join(output_directory, 'Data', 'Benign')+'/'+f[:-4]+'.pkl')
+        joblib.dump(adversarial_data, os.path.join(output_directory, 'Data', 'Adversarial') + '/' + f[:-4] + '.pkl')
         # Nawawy's end
