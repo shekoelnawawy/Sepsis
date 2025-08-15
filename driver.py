@@ -63,6 +63,9 @@ if __name__ == '__main__':
         # Nawawy's start
         scores_adversarial = np.zeros(num_rows)
         labels_adversarial = np.zeros(num_rows)
+        print(data.shape)
+        exit(1)
+        # adversarial_data = np.random.rand(num_rows, nv)
         # Nawawy's end
         for t in range(num_rows):
             current_data = data[:t+1]
