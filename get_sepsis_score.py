@@ -56,7 +56,7 @@ class Model(nn.Module):
 
 
 # Nawawy's start
-def get_sepsis_score(data, model, adversary=False):
+def get_sepsis_score(data, model, adversary=False, adversarial_data=None):
 # Nawawy's end
     data = pd.DataFrame(data)
     data = data.fillna(method='ffill')
@@ -77,17 +77,7 @@ def get_sepsis_score(data, model, adversary=False):
             allPatients_adversarial = allPatients_benign
         allPatients_adversarial = allPatients_adversarial.reshape(backcast_length, nv)
         data = allPatients_adversarial
-        print('allPatients_benign')
-        print(allPatients_benign)
-        print(allPatients_benign.shape)
-        print(type(allPatients_benign))
-        print('---------------------------------------------')
-        print('allPatients_adversarial')
-        print(allPatients_adversarial)
-        print(allPatients_adversarial.shape)
-        print(type(allPatients_adversarial))
-        print('---------------------------------------------')
-        # exit(1)
+        adversarial_data[backcast_length - 1] = data[backcast_length - 1]
     # Nawawy's end
     norm = [2.800e+02, 1.000e+02, 5.000e+01, 3.000e+02, 3.000e+02, 3.000e+02, 1.000e+02,
             1.000e+02, 1.000e+02, 5.500e+01, 4.000e+03, 7.930e+00, 1.000e+02, 1.000e+02,

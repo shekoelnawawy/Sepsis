@@ -63,9 +63,7 @@ if __name__ == '__main__':
         # Nawawy's start
         scores_adversarial = np.zeros(num_rows)
         labels_adversarial = np.zeros(num_rows)
-        print(data.shape)
-        exit(1)
-        # adversarial_data = np.random.rand(num_rows, nv)
+        adversarial_data = np.random.rand(data.shape[0], data.shape[1])
         # Nawawy's end
         for t in range(num_rows):
             current_data = data[:t+1]
@@ -73,10 +71,25 @@ if __name__ == '__main__':
             scores[t] = current_score
             labels[t] = current_label
             # Nawawy's start
-            current_score_adversarial, current_label_adversarial = get_sepsis_score(current_data, model, adversary=True)
+            current_score_adversarial, current_label_adversarial = get_sepsis_score(current_data, model, adversary=True, adversarial_data=adversarial_data)
             scores_adversarial[t] = current_score_adversarial
             labels_adversarial[t] = current_label_adversarial
             # Nawawy's end
+
+        # Nawawy's start
+        print('benign_data')
+        print(data)
+        print(data.shape)
+        print(type(data))
+        print('---------------------------------------------')
+
+        print('adversarial_data')
+        print(adversarial_data)
+        print(adversarial_data.shape)
+        print(type(adversarial_data))
+        print('---------------------------------------------')
+        exit(1)
+        # Nawawy's end
 
         # Save results.
         # Nawawy's start
