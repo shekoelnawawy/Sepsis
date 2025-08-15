@@ -56,7 +56,7 @@ class Model(nn.Module):
 
 
 # Nawawy's start
-def get_sepsis_score(data, model, target_labels=None, adversary=False):
+def get_sepsis_score(data, model, adversary=False):
 # Nawawy's end
     data = pd.DataFrame(data)
     data = data.fillna(method='ffill')
