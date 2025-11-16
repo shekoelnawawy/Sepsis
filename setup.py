@@ -12,7 +12,7 @@ def run_command(cmd, shell=False, env=None):
 
 
 def copy_sepsis_original(target_dir):
-    src_dir = Path.home() / "Downloads" / "Sepsis" / "files" / "challenge-2019" / "1.0.0" / "training" /
+    src_dir = Path.home() / "Downloads" / "Sepsis" / "files" / "challenge-2019" / "1.0.0" / "training"
     if not src_dir.exists():
         raise FileNotFoundError(f"Source directory not found: {src_dir}")
     
