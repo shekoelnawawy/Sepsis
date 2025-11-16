@@ -22,17 +22,17 @@ where `input_directory` is a directory for input data files and `output_director
 See the PhysioNet/CinC 2019 webpage for more details, including instructions for the other files in this repository.
 
 ## Steps to set up and run with URET integration
-* Install requirements
+1. Install requirements
 ```
 python setup.py
 ```
 
-* Activate virtual environment
+2. Activate virtual environment
 ```
 source myvenv/bin/activate
 ```
 
-* Run the model
+3. Run the model
 ```
 python driver.py inputs/training_setA outputs/training_setA
 ```
