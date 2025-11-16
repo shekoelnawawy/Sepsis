@@ -32,7 +32,7 @@ python setup.py
 source myvenv/bin/activate
 ```
 
-3. Run the model
+3. Run the model ```python driver.py <input_directory> <output_directory>```
 ```
 python driver.py inputs/training_setA outputs/training_setA
 ```
