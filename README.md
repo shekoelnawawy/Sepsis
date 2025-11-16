@@ -1,1 +1,2 @@
-- Run Python setup.py
+- Run python setup.py
+- Run python driver.py inputs/training_set<A/B> outputs/training_set<A/B>
