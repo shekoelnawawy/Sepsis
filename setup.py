@@ -11,20 +11,6 @@ def run_command(cmd, shell=False, env=None):
     return result
 
 
-def copy_sepsis_original(target_dir):
-    src_dir = Path.home() / "Downloads" / "Sepsis" / "files" / "challenge-2019" / "1.0.0" / "training"
-    if not src_dir.exists():
-        raise FileNotFoundError(f"Source directory not found: {src_dir}")
-    
-    print(f"Copying files from {src_dir} to {target_dir}")
-    for item in src_dir.iterdir():
-        dest = Path(target_dir) / item.name
-        if item.is_dir():
-            if dest.exists():
-                shutil.rmtree(dest)
-            shutil.copytree(item, dest)
-
-
 def main():
     base_dir = Path.cwd()
     venv_dir = base_dir / "myvenv"
@@ -44,8 +30,7 @@ def main():
     print("\n>>> cp -r ~/Downloads/Sepsis/files/challenge-2019/1.0.0/training/training* ./inputs/")
     input_dir = Path.cwd() / "inputs"
     shutil.rmtree(input_dir)
-    os.makedirs(input_dir, exist_ok = True)
-    copy_sepsis_original(input_dir)
+    shutil.copytree("/home/mnawawy/Downloads/Sepsis/files/challenge-2019/1.0.0/training", input_dir, dirs_exist_ok=True)
 
     # 5. Change directory to URET
     os.chdir("URET")
